@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #stage {
+            width: 80%;
+            height: 100%;
+            margin: auto;
+            border: 3px dotted saddlebrown;
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+    <title>welcome to color picker</title>
+</head>
+
+<!-- 學習重點
+1  oninput是觸發時bar也會跟著改變  该事件在 <input> 或 <textarea> 元素的值发生改变时触发。
+2  利用tostring可以將數字換成16進位  
+3
+ -->
+
+<body>
+    <div class="container  justify-content-center mt-5 " style=height:50%;">
+        <div id=stage style="background:rgb(255, 255, 255)"></div>
+    </div>
+    <div class="container h-100" style="width:80%;" >
+        <div class="d-flex justify-content-center mt-5">
+            <div>
+            <input type="button" value="+" onmousedown="cont('add')"  onmouseup="stop('run')">
+            <input type="button" value="-" onmousedown="cont('sub')"  onmouseup="stop('run')">
+            <input type="button" value="?" onmousedown="cont('rand')"  onmouseup="stop('run')" >
+        </div>    
+
+        </div>
+        <!-- r---------------------------------------------------- -->
+        <div class="flex-column mt-3 mx-lg-3 flex-column align-content-center ">
+            <label for="customRange1" style="color:rgb(255, 0, 0);font-size: 24px;">R</label>
+            <input type="range" class="custom-range " id="colorBarR" min="0" max="255" value="255"  oninput="sbar('r',this)">
+        </div>
+        <!-- g---------------------------------------------------- -->
+        <div class="flex-column mt-3 mx-lg-3 flex-column align-content-center ">
+            <label for="customRange1" style="color:rgb(0, 255, 0);font-size: 24px">G</label>
+            <input type="range" class="custom-range " id="colorBarG" min="0" max="255" value="255" oninput="sbar('g',this)">
+        </div>
+        <!-- b---------------------------------------------------- -->
+        <div class="flex-column mt-3 mx-lg-3 flex-column align-content-center ">
+            <label for="customRange1" style="color:rgb(0, 0, 255);font-size: 24px">B</label>
+            <input type="range" class="custom-range " id="colorBarB" min="0" max="255" value="255" oninput="sbar('b',this)">
+        </div>
+        
+
+    </div>
+    <script>
+        var r = 255;
+        var g = 255;
+        var b = 255;
+
+        let BarR = document.getElementById("colorBarR");
+        let BarG = document.getElementById("colorBarG");
+        let BarB = document.getElementById("colorBarB");
+
+
+        function changeColor() {
+            document.getElementById("stage").style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+            BarR.value = r;
+            BarG.value = g;
+            BarB.value = b;
+        }
+
+        function sbar(clr, obj) {
+            switch (clr) {
+                case 'r':
+                    r = Number(obj.value);
+                    changeColor();
+                    break;
+                case 'g':
+                    g = Number(obj.value);
+                    changeColor();
+                    break;
+                case 'b':
+                    b = Number(obj.value);
+                    changeColor();
+                    break;
+            }
+        }
+       
+        function stop(){
+            clearInterval(run);
+        }
+
+        function cont(select) {
+            run = setInterval(function () {
+                switch (select) {
+                    case 'add':
+                        if (r < 255) r++;
+                        if (g < 255) g++;
+                        if (b < 255) b++;
+                        changeColor()
+                        break;
+                    case 'sub':
+                        if (r > 0) r--;
+                        if (g > 0) g--;
+                        if (b > 0) b--;
+                        changeColor()
+                        break;
+                    case 'rand':
+                        var rr=(Math.floor(Math.random(0,255)*256));
+                        var gg=(Math.floor(Math.random(0,255)*256));
+                        var bb=(Math.floor(Math.random(0,255)*256));
+                        r=rr;
+                        g=gg;
+                        b=bb;
+                        changeColor()
+                        break;
+                }
+            },40
+            )
+            console.log(r,g,b)
+        }
+        
+    </script>
+
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
